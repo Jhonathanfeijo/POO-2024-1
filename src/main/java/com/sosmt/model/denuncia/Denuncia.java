@@ -12,8 +12,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,14 +26,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "idDenuncia")
+@Table(name = "denuncia")
 public class Denuncia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String idDenuncia;
 	@ManyToOne
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 	private LocalDateTime horaDenuncia;
 	private String descricaoDenuncia;

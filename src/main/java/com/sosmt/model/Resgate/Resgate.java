@@ -12,8 +12,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,20 +26,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "idResgate")
+@Table(name = "resgate")
 public class Resgate {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String idResgate;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	@ManyToOne
 	private ProvedorAjuda provedorAjuda;
 	private LocalDateTime dataSolicitada;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 	private String descricao;
-	
+
 	public Resgate(Usuario usuario, ProvedorAjuda provedor, Endereco endereco, String descricao) {
 		this.idResgate = null;
 		this.usuario = usuario;
